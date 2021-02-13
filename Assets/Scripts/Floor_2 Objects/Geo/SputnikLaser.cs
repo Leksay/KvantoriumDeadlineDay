@@ -24,7 +24,6 @@ public class SputnikLaser : MonoBehaviour
 
         myTransform = transform;
         ceilingXFloorY.x = GameObject.Find("CeilingFloor2").transform.position.y;
-        print(ceilingXFloorY.x);
         ceilingXFloorY.y = Floor_2Positioner.myY;
         crossTransform = myTransform.parent.transform;
         lr = GetComponent<LineRenderer>();

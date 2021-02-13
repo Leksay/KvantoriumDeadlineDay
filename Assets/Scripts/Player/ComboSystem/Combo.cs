@@ -5,7 +5,6 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class Combo : MonoBehaviour
 {
-    public string name;
     [HideInInspector] public List<Move> moves;
     public float delayTime;
     public Animator CharacterAnimator;

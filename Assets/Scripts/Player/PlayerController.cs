@@ -83,25 +83,6 @@ public class PlayerController : MonoBehaviour, IAtackable, IPausable
         myTransform.position += new Vector3(1,0,0) * speed * h * Time.deltaTime;
     }
 
-    //private void Attack()
-    //{
-    //   //animator.SetTrigger("attack");
-    //   nextAttackTime = Time.time + 1.0f / attackRate;
-    //   Collider2D[] colliders= Physics2D.OverlapCircleAll(attackPoint.position,radius);
-    //   foreach (var collider in colliders)
-    //   {
-    //       var atakable = collider.GetComponent<IAtackable>();
-    //       if(atakable == null)
-    //       {
-    //            atakable = collider.GetComponentInParent<IAtackable>();
-    //       }
-    //       if (atakable != null && collider.tag == "CanAttack")
-    //       {
-    //           atakable.GetDamage(damage);
-    //       }
-    //   }
-    //}
-
     private void Jump()
     {
         if (startJumping || !isGrounded) return;

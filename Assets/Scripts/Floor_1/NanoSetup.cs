@@ -17,6 +17,7 @@ public class NanoSetup : MonoBehaviour
         startParams.FOV = 5;
         startParams.speedMultiplier = player.transform.GetComponent<PlayerController>().speed;
         startParams.speedMultiplier = player.transform.localScale.x;
+        startParams.attackRadius = player.GetComponent<AttackSystem>().GetRadious();
         
 
         if(player != null)

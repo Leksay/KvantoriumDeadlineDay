@@ -9,7 +9,7 @@ public class AttackSystem : MonoBehaviour
     [Header("Attack Parametres")]
     [SerializeField] private float notComboAttackTime;
     [SerializeField] private float damage;
-    [SerializeField] public float radius;
+    [SerializeField] private float radius;
     [SerializeField] private Transform attackPoint;
 
     private float timer;
@@ -52,7 +52,7 @@ public class AttackSystem : MonoBehaviour
             {
                 combo.CharacterAnimator.SetTrigger("attack");
                 nextAttackTime = Time.time + notComboAttackTime;
-                Attack();
+                //Attack();
             }
         }
         else if(ComboAttackCondition())
@@ -65,7 +65,7 @@ public class AttackSystem : MonoBehaviour
             nextAttackTime = Time.time + combo.attackTime;
             timer = combo.delayTime;
             moveIndex++;
-            Attack();
+            //Attack();
         }
         if(timer > 0)
         {
@@ -77,6 +77,7 @@ public class AttackSystem : MonoBehaviour
         }
     }
     #endregion
+    // Called from attack animation event
     private void Attack()
     {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(attackPoint.position, radius);
@@ -92,6 +93,14 @@ public class AttackSystem : MonoBehaviour
                 atakable.GetDamage(damage);
             }
         }
+    }
+
+    private void AttackWithMultipier(float multiplier)
+    {
+        float tempAttack = damage;
+        damage *= multiplier;
+        Attack();
+        damage = tempAttack;
     }
 
     private bool AttackCondition()
@@ -132,9 +141,16 @@ public class AttackSystem : MonoBehaviour
         }
     }
 
+    public void MultiplyAttackRadious(float newRadius)
+    {
+        radius *= newRadius;
+    }
+    public float GetRadious() => radius;
+    public float SetRadious(float newRadious) => radius = newRadious;
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, radius);
     }
+
 }

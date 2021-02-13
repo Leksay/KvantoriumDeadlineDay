@@ -2,36 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
+
+[RequireComponent(typeof(PlayerController), typeof(AttackSystem))]
 public class PlayerNanoSetup : MonoBehaviour
 {
     public NanoSetup.NanoSetupStruct startSettings;
     public bool settuped;
     private PlayerController player;
+    private AttackSystem attackSystem;
     private Camera cam;
     private void Start()
     {
         settuped = false;
         startSettings = new NanoSetup.NanoSetupStruct();
         player = GetComponent<PlayerController>();
+        attackSystem = GetComponent<AttackSystem>();
         startSettings.FOV = 5;
         startSettings.scaleMultiplier = transform.localScale.x;
         startSettings.speedMultiplier = player.speed;
-        startSettings.attackRadius = player.radius;
+        startSettings.attackRadius = attackSystem.GetRadious();
         cam = Camera.main;
     }
     public void SetupNanoSettings(NanoSetup.NanoSetupStruct settings)
     {
         if (settuped) return;
         player.speed *= settings.speedMultiplier;
-        player.radius *= 0.1f;
-        print(settings.speedMultiplier);
+        attackSystem.MultiplyAttackRadious(settings.attackRadius);
         WaitForNanoSetup(player.transform.localScale.x * settings.scaleMultiplier, settings.FOV);
     }
     public void RestoreNanoSettings ()
     {
         if (!settuped) return;
         player.speed = startSettings.speedMultiplier;
-        player.radius = startSettings.attackRadius;
+        attackSystem.SetRadious(startSettings.attackRadius);
         WaitForNanoReSetup(startSettings.scaleMultiplier, startSettings.FOV);
     }
     private async void WaitForNanoSetup(float newScale, float newFov)
